@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'menu_controller/menu_controller.dart';
 
 class MenuHeader extends StatelessWidget {
@@ -34,14 +33,13 @@ class _ItemBuild extends StatelessWidget {
         duration: const Duration(milliseconds: 300),
         decoration: BoxDecoration(
           border: Border.all(
-            width: .2,
-            color: Colors.black.withOpacity(!select ? 0 : 1),
+            color: Colors.grey.shade500
           ),
-          color: Colors.black.withOpacity(!select ? 0.1 : 0),
+          color: Colors.grey.withOpacity(!select ? 0.2 : 0),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 9),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Wrap(
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
 if (select && index <= icon.length - 1)
               Row(children: [

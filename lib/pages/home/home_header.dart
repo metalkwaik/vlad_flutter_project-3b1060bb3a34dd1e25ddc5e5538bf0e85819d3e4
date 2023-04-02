@@ -33,10 +33,9 @@ class _ButtonHeader extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 9),
           decoration: BoxDecoration(
             border: Border.all(
-              width: .2,
-              color: Colors.black.withOpacity(select ? 0 : 1),
+              color: Colors.grey.withOpacity(select ? 0 : 1),
             ),
-            color: Colors.black.withOpacity(select ? 0.2 : 0),
+            color: Colors.grey.withOpacity(select ? 0.2 : 0),
           ),
           duration: const Duration(milliseconds: 300),
           curve: Curves.ease,

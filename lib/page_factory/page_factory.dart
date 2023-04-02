@@ -23,6 +23,10 @@ class FactoryPage {
           ChangeNotifierProvider<CartController>(
             create: (_) => CartController(),
           ),
+          ChangeNotifierProvider<AuthController>(
+            create: (_) => AuthController(),
+          ),
+
         ],
         child: const StacPages(),
       );

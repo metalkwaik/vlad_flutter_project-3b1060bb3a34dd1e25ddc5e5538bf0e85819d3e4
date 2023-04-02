@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/auth/controller/auth_controller.dart';
 import 'package:flutter_application_1/widgets/button/my_button.dart';
 import 'package:provider/provider.dart';
-
 import '../../widgets/my_text_field/my_text_field.dart';
+import 'model/profile_info_model.dart';
 
-const titles = <String>['name', 'adress', 'phone'];
-const icons = <IconData>[Icons.person, Icons.home, Icons.phone];
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
@@ -46,11 +44,10 @@ class _AuthBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = context.read<AuthController>();
-    final listTextControll = controller.textEdi(titles);
+    final listTextControll = controller.textEdi();
     Widget authSubmit() => MyButton(
           text: 'Вход',
           fun: () => controller.showMainPage(
-            listTextControll,
             context,
           ),
         );
@@ -58,13 +55,15 @@ class _AuthBody extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         ...List.generate(
-          titles.length,
+          ProfileInfo.titles.length,
           (index) => Column(
             children: [
               MyTextField(
                 controller: listTextControll[index],
-                icon: icons.length > index ? icons[index] : null,
-                hintText: titles[index],
+                icon: ProfileInfo.icons.length > index
+                    ? ProfileInfo.icons[index]
+                    : null,
+                hintText: ProfileInfo.titles[index],
               ),
               const SizedBox(height: 9),
             ],

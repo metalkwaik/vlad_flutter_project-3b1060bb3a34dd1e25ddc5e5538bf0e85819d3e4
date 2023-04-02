@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../navigation/main_navigation.dart';
+import '../model/profile_info_model.dart';
 
 class AuthController extends ChangeNotifier {
-  List<TextEditingController> textEdi(List<String> data) => data.map((s) {
+  AuthController() {
+    initProfileInfoData();
+  }
+  List<TextEditingController> textEdi() => ProfileInfo.titles.map((s) {
         return TextEditingController(text: s);
       }).toList();
-
-  Future<void> showMainPage(
-      List<TextEditingController> data, BuildContext context) async {
-    final prefs = await SharedPreferences.getInstance();
-    final List<String> profileData = <String>[];
-    for (var element in data) {
-      profileData.add(element.text);
+  final List<ProfileInfoModel> _profileInfoModel = [];
+  List<ProfileInfoModel> get profileInfoModel => _profileInfoModel.toList();
+  void initProfileInfoData() {
+    if (_profileInfoModel != []) {
+      List.generate(
+        ProfileInfo.titles.length,
+        (index) {
+          _profileInfoModel.add(
+            ProfileInfoModel(
+              ProfileInfo.icons[index],
+              name: textEdi()[index].text,
+            ),
+          );
+        },
+      );
     }
-    await prefs.setStringList('profileData', profileData);
+  }
+
+  void showMainPage(BuildContext context) {
     Navigator.of(context).pushNamed(MainNavigation().initialRoute);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/pages/auth/controller/auth_controller.dart';
 import 'package:flutter_application_1/pages/profile/controller/profile_controller.dart';
 import 'package:flutter_application_1/widgets/my_text_field/my_text_field.dart';
 import 'package:provider/provider.dart';
@@ -8,15 +9,14 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(18),
-          child: Column(
-            children: const [
-              _ProfileHeader(),
-              _ProfileBody(),
-            ],
-          ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 9),
+        child: Column(
+          children: const [
+            _ProfileHeader(),
+            _ProfileBody(),
+            _ProfileLogout(),
+          ],
         ),
       ),
     );
@@ -103,8 +103,6 @@ class _ProfileHeader extends StatelessWidget {
               imgUpData(),
             ],
           );
-
-
   }
 }
 
@@ -112,12 +110,48 @@ class _ProfileBody extends StatelessWidget {
   const _ProfileBody();
   @override
   Widget build(BuildContext context) {
-    final controller = context.watch<ProfileController>();
-    return Column(
-      children: List.generate(
-        controller.data?.length ?? 0,
-        (index) => Text(controller.data?[index] ?? ''),
+    final controller = context.watch<AuthController>();
+    return Expanded(
+      child: Column(
+        children: List.generate(
+          controller.profileInfoModel.length,
+          (index) => Column(
+            children: [
+              const SizedBox(height: 18),
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.black),
+                ),
+                child: ListTile(
+                  title: Text(controller.profileInfoModel[index].name),
+                  leading: Icon(controller.profileInfoModel[index].icon),
+                  trailing: const Icon(Icons.edit),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
+    );
+  }
+}
+
+class _ProfileLogout extends StatelessWidget {
+  const _ProfileLogout();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.grey.withOpacity(0.3),
+        border: Border.all(width: 1, color: Colors.black),
+      ),
+      child: const Center(
+          child: Padding(
+        padding: EdgeInsets.all(9.0),
+        child: Text('data'),
+      )),
     );
   }
 }

@@ -7,11 +7,10 @@ List<String>? data = <String>[];
   final imgController = TextEditingController();
 
   late final SharedPreferences story;
-  ProfileController(){
-
-    getData() ;
+  ProfileController() {
     getImg();
   }
+
   getImg() async {
     final prefs = await SharedPreferences.getInstance();
     if (prefs.containsKey('ProfileImg')) {
@@ -32,9 +31,5 @@ List<String>? data = <String>[];
     }
 
   }
-  getData() async {
-    story = await SharedPreferences.getInstance();
-    data = story.getStringList('profileData');
-    notifyListeners();
-  }
+
 }

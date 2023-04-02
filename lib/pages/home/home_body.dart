@@ -60,8 +60,12 @@ Widget  pickupItemBuild(index) =>   InkWell(
   onTap: () => controller.togSelectPickup(index) ,
   child:   Container(
      decoration: BoxDecoration(
-      color: Colors.black.withOpacity(controller.selectedIndexPickupAdress == index  ? 0.1 : 0,),
-      border: controller.selectedIndexPickupAdress == index ? Border.all(color :Colors.black.withOpacity(0.5) ) : null ),
+                color: Colors.grey.withOpacity(
+                  controller.selectedIndexPickupAdress == index ? 0.2 : 0,
+                ),
+                border: controller.selectedIndexPickupAdress == index
+                    ? Border.all(color: Colors.grey.withOpacity(0.5))
+                    : null),
     child:   ListTile(
           title: Text(controller.listInfoRestorans[index].adres),
           leading: const Icon(Icons.location_on),
@@ -70,7 +74,17 @@ Widget  pickupItemBuild(index) =>   InkWell(
                Text(controller.listInfoRestorans[index].dataTime.values.toString()),
             ],
           ),
-          trailing: Text(controller.listInfoRestorans[index].status ? 'Открыт' : 'Закрыт'),
+              trailing: Text(
+                controller.listInfoRestorans[index].status
+                    ? 'Открыт'
+                    : 'Закрыт',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: controller.listInfoRestorans[index].status
+                      ? Colors.green
+                      : Colors.red,
+                ),
+              ),
         ),
   ),
 );
