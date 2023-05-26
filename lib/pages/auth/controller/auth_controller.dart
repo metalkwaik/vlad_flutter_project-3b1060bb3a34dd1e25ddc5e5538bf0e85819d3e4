@@ -9,6 +9,7 @@ class AuthController extends ChangeNotifier {
   List<TextEditingController> textEdi() => ProfileInfo.titles.map((s) {
         return TextEditingController(text: s);
       }).toList();
+
   final List<ProfileInfoModel> _profileInfoModel = [];
   List<ProfileInfoModel> get profileInfoModel => _profileInfoModel.toList();
   void initProfileInfoData() {

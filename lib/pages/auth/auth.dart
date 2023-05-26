@@ -13,13 +13,15 @@ class AuthPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(18),
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
-              _TitleAuth(),
+              _AuthTitle(),
               SizedBox(height: 18),
-              _AuthBody(),
+              _AuthTextFields(),
+              SizedBox(height: 18),
+              _AuthButton(),
             ],
           ),
         ),
@@ -28,33 +30,25 @@ class AuthPage extends StatelessWidget {
   }
 }
 
-class _TitleAuth extends StatelessWidget {
-  const _TitleAuth();
+class _AuthTitle extends StatelessWidget {
+  const _AuthTitle();
   @override
   Widget build(BuildContext context) {
     return const Text(
-      'Окно входа',
+      'Авторизация',
       style: TextStyle(fontSize: 18),
     );
   }
 }
-
-class _AuthBody extends StatelessWidget {
-  const _AuthBody();
+/// удалить колонны , подумать как экономнее написать
+class _AuthTextFields extends StatelessWidget {
+  const _AuthTextFields();
   @override
   Widget build(BuildContext context) {
-    final controller = context.read<AuthController>();
-    final listTextControll = controller.textEdi();
-    Widget authSubmit() => MyButton(
-          text: 'Вход',
-          fun: () => controller.showMainPage(
-            context,
-          ),
-        );
+    final listTextControll = context.read<AuthController>().textEdi();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        ...List.generate(
+      children: List.generate(
           ProfileInfo.titles.length,
           (index) => Column(
             children: [
@@ -68,12 +62,19 @@ class _AuthBody extends StatelessWidget {
               const SizedBox(height: 9),
             ],
           ),
-        ),
-        const SizedBox(height: 9),
-        authSubmit(),
-        const SizedBox(height: 18),
-      ],
+      ),
     );
+  }
+}
 
+class _AuthButton extends StatelessWidget {
+  const _AuthButton();
+  @override
+  Widget build(BuildContext context) {
+    final controller = context.read<AuthController>();
+    return MyButton(
+      text: 'Вход',
+      fun: () => controller.showMainPage(context),
+    );
   }
 }
