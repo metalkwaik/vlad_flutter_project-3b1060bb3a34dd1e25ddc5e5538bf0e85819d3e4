@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../widgets/header_menu/header_menu.dart';
 import 'home_controller/home_controller.dart';
 
 
@@ -11,7 +12,7 @@ class HomeHeader extends StatelessWidget {
       children: List.generate(
         ListPage.values.length,
         (index) => _ButtonHeader(
-          index: index,
+          index: index
         ),
       ),
     );
@@ -26,21 +27,15 @@ class _ButtonHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = context.watch<HomeController>();
     bool select = controller.currentIndexPage != index;
-    return Expanded(
-      child: InkWell(
-        onTap: () => controller.setScreen(index),
-        child: AnimatedContainer(
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 9),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.grey.withOpacity(select ? 0 : 1),
-            ),
-            color: Colors.grey.withOpacity(select ? 0.2 : 0),
-          ),
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.ease,
+    return HeaderMenu(
+      select: select,
+      fun: () => controller.setScreen(index),
           child: Center(
-            child: Text(ListPage.values[index].name),
+        child: Text(
+          ListPage.values[index].name,
+          style: TextStyle(
+            color: Colors.black.withOpacity(select ? 0.6 : 1),
+            fontSize: 16,
           ),
         ),
       ),

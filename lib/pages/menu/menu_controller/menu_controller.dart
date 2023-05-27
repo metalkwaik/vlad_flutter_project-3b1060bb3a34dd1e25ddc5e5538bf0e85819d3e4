@@ -20,10 +20,17 @@ class MenuControll extends ChangeNotifier {
   late Map<String, dynamic> _productMap;
 
   Future<void> _init() async {
-    _prefs = await SharedPreferences.getInstance();
-    _productMap = jsonDecode(_prefs
-        .getString(Constenst.LOCOL_KEY_GLOBAL_VALUE.keys.first) as String);
-    setCaterory();
+    try {
+      _prefs = await SharedPreferences.getInstance();
+      if (_prefs.containsKey(Constenst.LOCOL_KEY_GLOBAL_VALUE.keys.first)) {
+        _productMap = jsonDecode(_prefs
+            .getString(Constenst.LOCOL_KEY_GLOBAL_VALUE.keys.first)
+            .toString());
+        setCaterory();
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   setCaterory() {

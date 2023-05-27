@@ -15,17 +15,20 @@ abstract class Constenst {
     'product': '$MAIN_URL/products.json'
   };
 
- static const String LOCOL_KEY_DILU = 'ListPage';
- static const String LOCOL_KEY_OLATA = 'Opl';
- static const String LOCOL_KEY_RESTORAN = 'Rest';
- static const String LOCOL_KEY_INFO_DATA_RESTORAN = 'infoRestorans';
-
-
-
+  static const String LOCOL_KEY_DILU = 'ListPage';
+  static const String LOCOL_KEY_OLATA = 'Opl';
+  static const String LOCOL_KEY_RESTORAN = 'Rest';
+  static const String LOCOL_KEY_INFO_DATA_RESTORAN = 'infoRestorans';
 }
 
 class Dep {
-  Future<void> initFirebase() => _constructor();
+  Dep._init() {
+    _initFirebase();
+    _initData();
+  }
+  static final Dep instance = Dep._init();
+
+  Future<void> _initFirebase() => _constructor();
 
   Future<void> _constructor() async {
     if (defaultTargetPlatform.name != 'windows') {
@@ -41,7 +44,7 @@ class Dep {
     }
   }
 
-  Future<void> initData() async {
+  Future<void> _initData() async {
     Uri.parse(Constenst.LOCOL_KEY_GLOBAL_VALUE.values.first);
     Response response =
         await get(Uri.parse(Constenst.LOCOL_KEY_GLOBAL_VALUE.values.first));

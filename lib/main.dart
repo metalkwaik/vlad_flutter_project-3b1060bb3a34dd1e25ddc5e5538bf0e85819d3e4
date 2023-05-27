@@ -1,12 +1,8 @@
+
 import 'package:flutter/material.dart';
-import 'bindings/api/api_data_json.dart';
 import 'navigation/main_navigation.dart';
 
-void main() async {
-  await Dep().initFirebase();
-  await Dep().initData();
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -15,8 +11,9 @@ class MyApp extends StatelessWidget {
     final mainNavigation = MainNavigation();
     return MaterialApp(
       routes: mainNavigation.routes,
-      initialRoute: mainNavigation.auth,
+      initialRoute: mainNavigation.guiding,
       debugShowCheckedModeBanner: false,
     );
   }
+
 }

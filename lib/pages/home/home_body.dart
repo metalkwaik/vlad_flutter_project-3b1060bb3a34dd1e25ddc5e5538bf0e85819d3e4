@@ -5,9 +5,9 @@ import 'home_controller/home_controller.dart';
 
 const List<Widget> _listWidgets = [_Delivery(), _Pickup()];
 const List<String> _listTitle = [
-   'Укажети адресс доставки' ,
-   'Укажети откуда забирете' ,
-  ];
+  'Укажети адресс доставки',
+  'Укажети откуда забирете',
+];
 
 final widgets = List.generate(
   _listWidgets.length,
@@ -35,13 +35,15 @@ class HomeBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<HomeController>();
-    return IndexedStack(
-      index: controller.currentIndexPage,
-      children: widgets,
+    return Padding(
+      padding: const EdgeInsets.all(18.0),
+      child: IndexedStack(
+        index: controller.currentIndexPage,
+        children: widgets,
+      ),
     );
   }
 }
-
 
 class _Delivery extends StatelessWidget {
   const _Delivery();
@@ -55,48 +57,49 @@ class _Pickup extends StatelessWidget {
   const _Pickup();
   @override
   Widget build(BuildContext context) {
-        final controller = context.watch<HomeController>();
-Widget  pickupItemBuild(index) =>   InkWell(
-  onTap: () => controller.togSelectPickup(index) ,
-  child:   Container(
-     decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(
-                  controller.selectedIndexPickupAdress == index ? 0.2 : 0,
-                ),
-                border: controller.selectedIndexPickupAdress == index
-                    ? Border.all(color: Colors.grey.withOpacity(0.5))
-                    : null),
-    child:   ListTile(
-          title: Text(controller.listInfoRestorans[index].adres),
-          leading: const Icon(Icons.location_on),
-          subtitle: Row(
-            children: [
-               Text(controller.listInfoRestorans[index].dataTime.values.toString()),
-            ],
-          ),
-              trailing: Text(
-                controller.listInfoRestorans[index].status
-                    ? 'Открыт'
-                    : 'Закрыт',
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: controller.listInfoRestorans[index].status
-                      ? Colors.green
-                      : Colors.red,
-                ),
-              ),
-        ),
-  ),
-);
+    final controller = context.watch<HomeController>();
 
+    Widget pickupItemBuild(index) {
+      final select = controller.selectedIndexPickupAdress == index;
+      return InkWell(
+        onTap: () => controller.togSelectPickup(index),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.withOpacity(select ? 0.2 : 0),
+            border: Border.all(
+              color: Colors.grey.withOpacity(select ? 0.5 : 0),
+            ),
+          ),
+          child: ListTile(
+            title: Text(controller.listInfoRestorans[index].adres),
+            leading: const Icon(Icons.location_on),
+            subtitle: Row(
+              children: [
+                Text(controller.listInfoRestorans[index].dataTime.values
+                    .toString()),
+              ],
+            ),
+            trailing: Text(
+              controller.listInfoRestorans[index].status ? 'Открыт' : 'Закрыт',
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: controller.listInfoRestorans[index].status
+                    ? Colors.green
+                    : Colors.red,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
 
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.3,
-      child: ListView(
-        shrinkWrap: true,
+      child: Column(
+        //shrinkWrap: true,
         children: List.generate(
           controller.listInfoRestorans.length,
-          (index) => pickupItemBuild(index) ,
+          (index) => pickupItemBuild(index),
         ),
       ),
     );

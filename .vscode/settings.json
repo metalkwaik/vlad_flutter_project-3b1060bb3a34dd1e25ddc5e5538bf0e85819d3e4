@@ -123,7 +123,7 @@
   "editor.formatOnSaveMode": "modifications",
   "editor.formatOnSave": true,
   "security.workspace.trust.untrustedFiles": "open",
-  "window.zoomLevel": 0,
+  "window.zoomLevel": 1,
   "workbench.iconTheme": "material-icon-theme",
   "customizeUI.activityBarHideSettings": true,
   "updata.model": "manual",

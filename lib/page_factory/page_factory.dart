@@ -9,6 +9,8 @@ import '../pages/auth/auth.dart';
 import '../pages/auth/controller/auth_controller.dart';
 import '../pages/cart/cart.dart';
 import '../pages/cart/cart_controlle/cart_controller.dart';
+import '../pages/guiding/controller/guiding_controller.dart';
+import '../pages/guiding/page_guiding.dart';
 import '../pages/home/home.dart';
 import '../pages/home/home_controller/home_controller.dart';
 import '../pages/menu/menu_controller/menu_controller.dart';
@@ -50,4 +52,12 @@ class FactoryPage {
         create: (_) => AuthController(),
         child: const AuthPage(),
       );
+
+
+  Widget makeGuiding() => ChangeNotifierProvider(
+        create: (_) => GuidingController(),
+        child: const GuidingPage(),
+      );
+
+
 }

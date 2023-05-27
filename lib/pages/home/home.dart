@@ -8,11 +8,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Column(
+      child: ListView(
+        shrinkWrap: true,
         children: const [
           HomeHeader(),
-          SizedBox(height: 18),
+
           HomeBody(),
+
         ],
       ),
     );

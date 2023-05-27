@@ -5,12 +5,12 @@ import 'package:flutter_application_1/models/item_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CartController extends ChangeNotifier {
-  Map<int, CartData> _cardList = {};
+  final Map<int, CartData> _cardList = {};
   List<CartData> get getItemsList =>
       _cardList.entries.map((e) => e.value).toList();
 
   int _countForAdding = 0;
-  int _inCartItems = 0;
+  final int _inCartItems = 0;
 
   bool existInCart(ProductData product) => (_cardList.containsKey(product.id));
 

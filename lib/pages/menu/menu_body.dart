@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/item_model.dart';
+import 'package:flutter_application_1/widgets/button/my_button.dart';
 import 'package:provider/provider.dart';
 import '../cart/cart_controlle/cart_controller.dart';
 import 'menu_controller/menu_controller.dart';
@@ -11,22 +12,27 @@ class MenuBody extends StatelessWidget {
     final controller = context.watch<MenuControll>();
     return Expanded(
       child: SingleChildScrollView(
-        child: ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: controller.productData?.length ?? 0,
-          itemBuilder: (_, int index) => Column(
-            children: [
-              _ItemBuilder(index: index),
-              const Divider(color: Colors.grey, height: 18),
-            ],
+        child: Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: controller.productData?.length ?? 0,
+            itemBuilder: (_, int index) => Column(
+              children: [
+                _ItemBuilder(index: index),
+                const Divider(color: Colors.grey, height: 18),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
+
 const h = 90.0;
+
 class _ItemBuilder extends StatelessWidget {
   final int index;
   const _ItemBuilder({required this.index});
@@ -34,9 +40,9 @@ class _ItemBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = context.watch<MenuControll>();
 
-
     Widget itemImg() {
-      return ConstrainedBox(
+      return Container(
+        decoration: BoxDecoration(border: Border.all()),
         constraints: const BoxConstraints(
           minHeight: h,
           maxWidth: h * 1.5,
@@ -95,34 +101,29 @@ class _UpDataItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final cardController = context.watch<CartController>();
     return Padding(
-      padding: const EdgeInsets.all(6.0),
+      padding: const EdgeInsets.all(.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'цена ${item.price}',
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 16,
-            ),
+          SizedBox(
+            width: h * 1.5,
+            child: MyButton(text: 'цена ${item.price}'),
           ),
           const Spacer(),
-          GestureDetector(
-            onTap: () => cardController.upDataCountProductInCart(false, item),
-            child: const Icon(
-              Icons.remove,
-            ),
-          ),
-          const SizedBox(width: 9),
-          Text(cardController.getCountProduct(item)),
-          const SizedBox(width: 9),
-          GestureDetector(
-            onTap: () => cardController.upDataCountProductInCart(true, item),
-            child: const Icon(
-              Icons.add,
-            ),
+          Row(
+            children: [
+              InkWell(
+                  onTap: () =>
+                      cardController.upDataCountProductInCart(false, item),
+                  child: const Icon(Icons.remove)),
+              Text(cardController.getCountProduct(item)),
+              InkWell(
+                  onTap: () =>
+                      cardController.upDataCountProductInCart(true, item),
+                  child: const Icon(Icons.add))
+            ],
           ),
         ],
-
       ),
     );
   }

@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileController extends ChangeNotifier {
-List<String>? data = <String>[];
+  List<String>? data = <String>[];
   String? imgUrl;
   final imgController = TextEditingController();
 
   late final SharedPreferences story;
   ProfileController() {
     getImg();
+  }
+  bool editUser = true;
+  togEdit() {
+    editUser = !editUser;
+    notifyListeners();
   }
 
   getImg() async {
@@ -27,9 +32,7 @@ List<String>? data = <String>[];
       await getImg();
       Navigator.pop(context);
     } else {
-      print('text is null ');
+      NavigationBar(destinations: const [Text('data')]);
     }
-
   }
-
 }

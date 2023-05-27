@@ -36,7 +36,7 @@ class CartPage extends StatelessWidget {
                 child: MyButton(text: 'Купить'),
               ),
             ),
-            _TottalTitle()
+            const _TottalTitle()
           ],
         ),
       ],

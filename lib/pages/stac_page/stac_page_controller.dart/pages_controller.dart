@@ -5,6 +5,7 @@ class PagesController extends ChangeNotifier {
 
   setScreen(int index) {
     currentIndexPage = index;
+
     notifyListeners();
   }
 }

@@ -12,12 +12,13 @@ class HomeController extends ChangeNotifier {
   late final SharedPreferences prefs;
   HomeController() {
     _initLocalData();
-  }
-   Opl sposopOpl =  Opl.nal;
+}
+
+  Opl sposopOpl = Opl.nal;
   int selectedIndexPickupAdress = -1;
   Future<void> _initLocalData() async {
     prefs = await SharedPreferences.getInstance();
-    if(prefs.containsKey(Constenst.LOCOL_KEY_RESTORAN)){
+    if (prefs.containsKey(Constenst.LOCOL_KEY_RESTORAN)) {
       selectedIndexPickupAdress = prefs.getInt(Constenst.LOCOL_KEY_RESTORAN)!;
     }
 
@@ -41,7 +42,6 @@ class HomeController extends ChangeNotifier {
       default:
         sposopOpl = Opl.nal;
     }
-
   }
 
   setPay(Opl? value) {
@@ -54,7 +54,6 @@ class HomeController extends ChangeNotifier {
 
   List<InfoRestorans> listInfoRestorans = [];
 
-
   Future<void> togSelectPickup(index) async {
     await prefs.setInt(Constenst.LOCOL_KEY_RESTORAN, index);
 
@@ -64,7 +63,8 @@ class HomeController extends ChangeNotifier {
 
   setScreen(int index) async {
     currentIndexPage = index;
-    await prefs.setString(Constenst.LOCOL_KEY_DILU, ListPage.values[index].name);
+    await prefs.setString(
+        Constenst.LOCOL_KEY_DILU, ListPage.values[index].name);
     if (currentIndexPage == 1) {
       listInfoRestorans = [];
       _initDataRest();
@@ -73,20 +73,23 @@ class HomeController extends ChangeNotifier {
   }
 
   Future<void> _initDataRest() async {
+    try {
+      listInfoRestorans = [];
     final db = FirebaseFirestore.instance;
-    listInfoRestorans = [];
-    CollectionReference collectionRef = db.collection(Constenst.LOCOL_KEY_INFO_DATA_RESTORAN);
+
+      CollectionReference collectionRef =
+          db.collection(Constenst.LOCOL_KEY_INFO_DATA_RESTORAN);
+
     QuerySnapshot querySnapshot = await collectionRef.get();
     querySnapshot.docs
         .map((doc) => doc.data() as Map<String, dynamic>)
         .toList()
-        .forEach((element) {
-      bool isOpen = false;
+          .forEach((element) {
       final nowTime = double.parse(DateFormat("HH.mm").format(DateTime.now()));
       final timePeriod = element['dataTime']['time'];
       final restTimeOpen = double.parse(timePeriod.substring(0, 5));
       final restTimeClose = double.parse(timePeriod.substring(8));
-      isOpen = nowTime > restTimeOpen && nowTime < restTimeClose;
+        bool isOpen = nowTime > restTimeOpen && nowTime < restTimeClose;
       listInfoRestorans.add(
         InfoRestorans(
           adres: element['adres'],
@@ -96,6 +99,7 @@ class HomeController extends ChangeNotifier {
       );
     });
     notifyListeners();
+    } catch (e) {}
   }
 }
 
@@ -103,6 +107,9 @@ class InfoRestorans {
   final String adres;
   final Map<String, dynamic> dataTime;
   final bool status;
-  InfoRestorans(
-      {required this.status, required this.adres, required this.dataTime});
+  InfoRestorans({
+    required this.status,
+    required this.adres,
+    required this.dataTime,
+  });
 }

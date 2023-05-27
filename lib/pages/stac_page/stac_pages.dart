@@ -3,6 +3,8 @@ import 'package:flutter_application_1/page_factory/page_factory.dart';
 import 'package:flutter_application_1/pages/stac_page/stac_page_controller.dart/pages_controller.dart';
 import 'package:provider/provider.dart';
 
+import '../auth/controller/auth_controller.dart';
+
 class StacPages extends StatelessWidget {
   const StacPages({super.key});
   @override
@@ -11,9 +13,7 @@ class StacPages extends StatelessWidget {
     final factor = FactoryPage();
     return Scaffold(
       bottomNavigationBar: const _Buttom(),
-      body: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: IndexedStack(
+      body: IndexedStack(
           index: controller.currentIndexPage,
           children: [
             factor.makeHome(),
@@ -22,7 +22,7 @@ class StacPages extends StatelessWidget {
             factor.makeProfile(),
 
           ],
-        ),
+
       ),
     );
   }
@@ -53,15 +53,17 @@ class _Buttom extends StatelessWidget {
   Widget build(BuildContext context) {
     final buttom = context.watch<PagesController>();
     return BottomNavigationBar(
+      elevation: 10,
       onTap: (value) => buttom.setScreen(value),
-      selectedItemColor: colorMenu[buttom.currentIndexPage],
+      selectedItemColor: Colors.black87,
+      unselectedItemColor: Colors.black45,
       currentIndex: buttom.currentIndexPage,
       items: List.generate(
         textMenu.length,
         (index) => BottomNavigationBarItem(
           icon: Icon(iconMenu[index]),
           label: textMenu[index],
-          backgroundColor: Colors.teal,
+          backgroundColor: Colors.white,
         ),
       ),
     );
